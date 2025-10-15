@@ -62,41 +62,50 @@ FOREIGN KEY (PackageID) REFERENCES Package(PackageID) ON DELETE CASCADE
 3. Insert Sample Records
 -- Insert Sample Senders
 INSERT INTO Sender (FullName, Address, Contact, City) VALUES
-('Alice Johnson', '123 Oak St', '555-0101', 'Boston'),
-('Bob Williams', '456 Pine Ave', '555-0102', 'New York');
+('Kwizera Jean', 'KG 567 St, Kicukiro', '0788123456', 'Kigali'),
+('Mukamana Alice', 'NR 22 Ave, Nyarugenge', '0733654321', 'Kigali'),
+('Uwera Divine', 'KN 12 Rd, Muhoza', '0783987654', 'Musanze'),
+('Ndayishimiye Eric', 'RN 1 St, Tumba', '0722112233', 'Huye');
 
 -- Insert Sample Receivers
 INSERT INTO Receiver (FullName, Address, City, Phone) VALUES
-('Charlie Brown', '789 Maple Rd', 'New York', '555-0201'),
-('Dana Scully', '101 Elm Blvd', 'Boston', '555-0202');
+('Habimana David', 'CH 45 Ave, Ngoma', 'Huye', '0785001122'),
+('Cyiza Sandrine', 'RN 5 St, Gisenyi', 'Rubavu', '0735998877'),
+('Gatete Ben', 'KK 30 Rd, Remera', 'Kigali', '0780445566'),
+('Mugisha Claude', 'KN 8 St, Gasabo', 'Kigali', '0730776655');
 
 -- Insert Sample Delivery Agents
 INSERT INTO DeliveryAgent (FullName, Region, Phone, VehicleNo) VALUES
-('Ethan Hunt', 'North Region', '555-0301', 'XYZ-111'),
-('Fiona Glenanne', 'South Region', '555-0302', 'ABC-222');
+('Byiringiro Jean', 'Kigali Metro', '0788001002', 'RAA-501A'),
+('Igiraneza Sonia', 'Northern Province', '0733909080', 'RAA-705B'),
+('Mutesi Angel', 'Southern Province', '0722102030', 'RAC-210C');
 
 -- Insert Sample Packages
 -- Package 1: Delivered
-INSERT INTO Package (SenderID, ReceiverID, Weight, Status, AgentID) VALUES
-(1, 4, 2.5, 'Delivered', 1);
+-- Senders: 1.Kwizera, 2.Mukamana, 3.Uwera, 4.Ndayishimiye
+-- Receivers: 1.Habimana, 2.Cyiza, 3.Gatete, 4.Mugisha
+-- Agents: 1.Byiringiro, 2.Igiraneza, 3.Mutesi
 
--- Package 2: In Transit
 INSERT INTO Package (SenderID, ReceiverID, Weight, Status, AgentID) VALUES
-(2, 3, 10.1, 'In Transit', 2);
-
--- Package 3: Pending
-INSERT INTO Package (SenderID, ReceiverID, Weight, Status, AgentID) VALUES
-(1, 3, 5.0, 'Pending', 1);
+(1, 1, 2.5, 'Delivered', 3),     -- Kigali -> Huye (Mutesi)
+(2, 2, 10.1, 'In Transit', 2),  -- Kigali -> Rubavu (Igiraneza)
+(3, 3, 5.0, 'Pending', 1),      -- Musanze -> Kigali (Byiringiro)
+(4, 4, 0.8, 'Delivered', 1),    -- Huye -> Kigali (Byiringiro)
+(1, 2, 1.5, 'Pending', 2),      -- Kigali -> Rubavu (Igiraneza)
+(2, 1, 3.2, 'In Transit', 3);   -- Kigali -> Huye (Mutesi)
 
 -- Insert Sample Route (for Agent 1 and 2)
 INSERT INTO Route (AgentID, StartPoint, EndPoint, DistanceKM) VALUES
-(1, 'Boston', 'Providence', 100.0),
-(2, 'New York', 'New Jersey', 50.0),
-(1, 'Boston', 'Hartford', 160.0); -- Agent 1 gets a second route
+(1, 'Kigali', 'Rwamagana', 60.0),
+(2, 'Kigali', 'Musanze', 100.0),
+(3, 'Kigali', 'Huye', 130.0),
+(1, 'Kigali', 'Bugesera', 45.0),
+(2, 'Musanze', 'Rubavu', 95.0);
 
 -- Insert Sample Payment (for Delivered Package 1)
 INSERT INTO Payment (PackageID, Amount, Method, PaymentDate) VALUES
-(1, 25.50, 'Credit Card', CURRENT_DATE);
+(1, 5500.00, 'Mobile Money', CURRENT_DATE), -- Package 1: Delivered
+(4, 2200.00, 'Cash', CURRENT_DATE);        -- Package 4: Delivered
 -----------------------------------------------------------------------
 
 4. Retrieve Delivered Packages
